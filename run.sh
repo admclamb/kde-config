@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for file in *.sh do
-    [[ "$file" == "run.sh" ]] && continue
+successful_runs=0
+total_runs=0
 
-    echo "Running $file"
-    bash "$file"
+for file in *.sh; do
+    [[ "$file" == "run.sh" ]] && continue
+    total_runs=$((total_runs + 1))
+
+    if bash "$file"; then
+        successful_runs=$((successful_runs + 1))
+    fi
 done
 
-echo "All scripts complete"
+echo "$successful_runs/$total_runs scripts ran successfully"
